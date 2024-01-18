@@ -2,30 +2,15 @@ require_relative 'suica'
 require_relative 'drink'
 require_relative 'vending_machine'
 
-# 現在のチャージ残高を取得する
+vm = VendingMachine.new
+pepsi_stock = vm.stock_info('ペプシ') # ペプシの在庫を取得
+puts "ペプシの在庫数：#{vm.stock_info('ペプシ')}本"
 suica = Suica.new
-suica.charge(1000)
-  puts "現在のチャージ残高は#{suica.balance}円です"
-
-vending_machine = VendingMachine.new
-
-vending_machine.drink_stock.each do |drink|
-  puts "この自販機には#{drink.name}があります"
-end
-
-# puts "この自販機には#{vending_machine.drink_stock.name}が#{vending_machine.drink_stock.size}本あります"
-
-# puts "#{vending_machine.drink_stock.name}"
-
-
-
-
-
-
-
-
-
-
-
-
-
+suica.charge(500)
+vm.purchase('ペプシ', suica)
+vm.purchase('ペプシ', suica)
+vm.purchase('いろはす', suica)
+# puts "ペプシの在庫数：#{pepsi_stock}本"
+puts "ペプシの在庫数：#{vm.stock_info('ペプシ')}本 モンスターの在庫数：#{vm.stock_info('モンスター')}本 いろはすの在庫数：#{vm.stock_info('いろはす')}本"
+puts "チャージ残高：#{suica.balance}"
+puts "売上金額：#{vm.sales}円"

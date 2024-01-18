@@ -7,14 +7,15 @@ class Suica
     @balance = balance
   end
 
+  # チャージする
   def charge(amount)
     raise '100円未満はチャージできません' if amount < 100
     @balance += amount
   end
+
+  # チャージ残高を減らす
+  def deduct(amount)
+    raise '残高が不足しています' if amount > @balance
+    @balance -= amount
+  end
 end
-
-# 現在のチャージ残高を取得する
-# suica = Suica.new
-# suica.charge(1000)
-#   puts "現在のチャージ残高は#{suica.balance}円です"
-
