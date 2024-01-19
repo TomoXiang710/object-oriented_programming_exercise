@@ -1,0 +1,3 @@
+[submodule "ruby/pokemon2"]
+	path = ruby/pokemon2
+	url = https://github.com/TomoXiang710/pokemon2.git
