@@ -34,24 +34,32 @@ class VendingMachine
 
       # Suicaのチャージ残高を減らす
       suica.deduct(drink.price)
-
-      # stock_info(drink_name)
     else
-      raise 'なんか知らんけど購入できません、、、' 
+      raise '購入できません'
     end
   end
 
   # 購入可能なドリンクのリストを取得
-  # def drink_list
-  #   # 購入可能かどうか？(true or false)
-  #   # trueなら、
-  #   # falseなら、
-  #   return 'ペプシ', 'モンスター', 'いろはす'
-  # end
-
-  # 在庫を補充する
-  def refill(drink_name, quantity)
-    .times @drink_stock << Drink.new('ペプシ', 150)
+  def available_drink_list(suica)
+    @drink_stock.map(&:name).uniq.select { |drink| can_purchase?(drink, suica) }.sort
   end
 
+  # 在庫を補充する
+  def replenish(drink_name, quantity)
+    quantity.times { @drink_stock << Drink.new(drink_name, price_for(drink_name)) }
+  end
+
+  # ドリンクの価格を取得
+  def price_for(drink_name)
+    case drink_name
+    when 'ペプシ'
+      150
+    when 'モンスター'
+      230
+    when 'いろはす'
+      120
+    else
+      0
+    end
+  end
 end
